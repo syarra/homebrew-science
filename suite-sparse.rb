@@ -14,9 +14,9 @@ class SuiteSparse < Formula
   option "with-matlab", "Install Matlab interfaces and tools"
   option "with-matlab-path=", "Path to Matlab executable (default: matlab)"
 
+  depends_on "metis"  # SuiteSparse must be compiled with metis 5.
+                      # It is shipped with metis-5.1.0
   depends_on "cmake" => :build
-  depends_on "metis" => :recommended  # SuiteSparse must be compiled with metis 5.
-                                      # It is shipped with metis-5.1.0
   depends_on "tbb" => :recommended
   depends_on "openblas" => :optional
 
