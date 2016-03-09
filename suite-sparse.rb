@@ -13,6 +13,7 @@ class SuiteSparse < Formula
 
   option "with-matlab", "Install Matlab interfaces and tools"
   option "with-matlab-path=", "Path to Matlab executable (default: matlab)"
+  option "with-openmp", "Build with OpenMP support"
 
   depends_on "metis"  # SuiteSparse must be compiled with metis 5.
                       # It is shipped with metis-5.1.0
@@ -21,10 +22,11 @@ class SuiteSparse < Formula
   depends_on "openblas" => :optional
 
   depends_on :fortran if build.with? "matlab"
+  needs :openmp if build.with? "openmp"
 
   def install
     cflags = "#{ENV.cflags}"
-    cflags += (ENV.compiler == :clang) ? "" : " -fopenmp"
+    cflags += "-fopenmp" if build_with? "openmp"
     cflags += " -I#{Formula["tbb"].opt_include}" if build.with? "tbb"
 
     make_args = ["CFLAGS=#{cflags}",
