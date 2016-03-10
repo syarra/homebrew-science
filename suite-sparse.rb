@@ -26,7 +26,7 @@ class SuiteSparse < Formula
 
   def install
     cflags = "#{ENV.cflags}"
-    cflags += "-fopenmp" if build_with? "openmp"
+    cflags += "-fopenmp" if build.with? "openmp"
     cflags += " -I#{Formula["tbb"].opt_include}" if build.with? "tbb"
 
     make_args = ["CFLAGS=#{cflags}",
