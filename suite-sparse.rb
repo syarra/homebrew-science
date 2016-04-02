@@ -49,7 +49,7 @@ class SuiteSparse < Formula
     # SuiteSparse is shipped with metis-5.1.0 but it can use Homebrew's version by
     # setting MY_METIS_LIB and MY_METIS_INC variables.
     make_args += ["MY_METIS_LIB=-L#{Formula["metis"].opt_lib} -lmetis",
-                  "MY_METIS_INC=#{Formula["metis"].opt_include}"] if build.with? "metis"
+                  "MY_METIS_INC=#{Formula["metis"].opt_include}"]
 
     # Demos failed to compile. Thus only building libraries.
     system "make", "library", *make_args
