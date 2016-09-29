@@ -13,11 +13,11 @@ class Soplex < Formula
     make_args = ["SHARED=true"]
     if OS.mac?
       File.open("make/make.darwin.x86_64.clang", "a") do |f|
-        f.puts "LIBBUILDFLAGS+= -m64 -L/usr/local/lib -lgmp -lz"
+        f.puts "LIBBUILDFLAGS+= -m64 -lgmp -lz"
       end
       make_args += ["COMP=clang"]
     end
-    system "make", *make_args, "USRCXXFLAGS=-I#{Formula["gmp"].opt_include}", "USRLDFLAGS=-L#{Formula["gmp"].opt_lib}"
+    system "make", *make_args
     system "make", "test", *make_args if build.with? "test"
     system "make", "install", "INSTALLDIR=#{prefix}", *make_args
     pkgshare.install "src/example.cpp"
