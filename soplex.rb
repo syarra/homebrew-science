@@ -10,19 +10,17 @@ class Soplex < Formula
   depends_on "gmp"
 
   def install
-    make_args = ["SHARED=true"]
     if OS.mac?
       File.open("make/make.darwin.x86_64.clang", "a") do |f|
         f.puts "LIBBUILDFLAGS+= -m64 -lgmp -lz"
       end
-      make_args += ["COMP=clang"]
     end
+    make_args = ["SHARED=true", "COMP=#{ENV["CC"]}"]
     system "make", *make_args
     system "make", "test", *make_args if build.with? "test"
     system "make", "install", "INSTALLDIR=#{prefix}", *make_args
     pkgshare.install "src/example.cpp"
   end
-
   def caveats; <<-EOS.undent
       SoPlex is distributed under the ZIB Academic License
       (http://scip.zib.de/academic.txt).
